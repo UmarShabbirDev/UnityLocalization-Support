@@ -1,0 +1,21 @@
+{
+  "name": "com.umardev.localization",
+  "version": "1.0.0",
+  "displayName": "UmarDev Localization Pro",
+  "description": "Simple yet powerful localization system for Unity. Supports CSV/JSON import, multiple languages, runtime switching, and automatic text component replacement.",
+  "unity": "2021.3",
+  "keywords": [
+    "localization",
+    "translation",
+    "i18n",
+    "language",
+    "multilingual"
+  ],
+  "author": {
+    "name": "UmarDev",
+    "email": "umar@umardev.com"
+  },
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
+  }
+}
