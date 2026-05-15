@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+#if TMP_PRESENT
 using TMPro;
+#endif
 
 namespace UmarDev.Localization
 {
@@ -22,8 +24,10 @@ namespace UmarDev.Localization
         [SerializeField, Tooltip("Cached Text component (legacy UI)")]
         private Text textComponent;
 
+#if TMP_PRESENT
         [SerializeField, Tooltip("Cached TextMeshPro component")]
         private TextMeshProUGUI tmpComponent;
+#endif
 
         private void Awake()
         {
@@ -33,6 +37,7 @@ namespace UmarDev.Localization
                 textComponent = GetComponent<Text>();
             }
 
+#if TMP_PRESENT
             if (tmpComponent == null)
             {
                 tmpComponent = GetComponent<TextMeshProUGUI>();
@@ -43,7 +48,9 @@ namespace UmarDev.Localization
             {
                 useTextMeshPro = true;
             }
-            else if (textComponent != null)
+            else
+#endif
+            if (textComponent != null)
             {
                 useTextMeshPro = false;
             }
@@ -99,11 +106,14 @@ namespace UmarDev.Localization
             string translatedText = LocalizationManager.Instance.GetText(translationKey);
 
             // Apply to the appropriate component
+#if TMP_PRESENT
             if (useTextMeshPro && tmpComponent != null)
             {
                 tmpComponent.text = translatedText;
             }
-            else if (!useTextMeshPro && textComponent != null)
+            else
+#endif
+            if (textComponent != null)
             {
                 textComponent.text = translatedText;
             }
@@ -123,21 +133,23 @@ namespace UmarDev.Localization
             var languageData = LocalizationManager.Instance.GetCurrentLanguageData();
             if (languageData == null) return;
 
+#if TMP_PRESENT
             // Apply TMP font if available
             if (useTextMeshPro && tmpComponent != null && languageData.tmpFont != null)
             {
                 tmpComponent.font = languageData.tmpFont;
             }
-            // Apply legacy font if available
-            else if (!useTextMeshPro && textComponent != null && languageData.font != null)
-            {
-                textComponent.font = languageData.font;
-            }
-
             // Handle RTL (Right-to-Left) languages
-            if (useTextMeshPro && tmpComponent != null)
+            else if (useTextMeshPro && tmpComponent != null)
             {
                 tmpComponent.isRightToLeftText = languageData.isRTL;
+            }
+            else
+#endif
+            // Apply legacy font if available
+            if (textComponent != null && languageData.font != null)
+            {
+                textComponent.font = languageData.font;
             }
         }
 
@@ -162,10 +174,12 @@ namespace UmarDev.Localization
                 textComponent = GetComponent<Text>();
             }
 
+#if TMP_PRESENT
             if (tmpComponent == null)
             {
                 tmpComponent = GetComponent<TextMeshProUGUI>();
             }
+#endif
         }
 #endif
     }

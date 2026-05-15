@@ -99,8 +99,10 @@ namespace UmarDev.Localization
         [Tooltip("Optional font to use for this language")]
         public Font font;
 
+#if TMP_PRESENT
         [Tooltip("Optional TMP font asset for this language")]
         public TMPro.TMP_FontAsset tmpFont;
+#endif
 
         [Tooltip("Is this a right-to-left language?")]
         public bool isRTL;
